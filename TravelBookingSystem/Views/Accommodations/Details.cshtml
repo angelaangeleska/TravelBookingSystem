@@ -1,0 +1,31 @@
+﻿@model TravelBookingSystem.Models.Accommodation
+
+@{
+    ViewBag.Title = "Accommodation Details";
+}
+
+<div class="container">
+    <h2 class="text-center">@Model.Name</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <img src="@Model.AccommodationImageURL" alt="@Model.Name" class="img-responsive img-thumbnail" style="width: 100%;" />
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>@Model.Description</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" }) |
+        @Html.ActionLink("Back to List", "Index", new { area = "" }, new { @class = "btn btn-secondary" })
+    </div>
+</div>

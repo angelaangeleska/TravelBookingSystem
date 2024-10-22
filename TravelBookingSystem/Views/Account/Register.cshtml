@@ -1,0 +1,93 @@
+﻿@model TravelBookingSystem.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+@section Styles {
+    <style>
+        #registerForm {
+            background-color: #ffffff; /* White background for the form */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px; /* Limit the width of the form */
+            margin: 0 auto; /* Center the form horizontally */
+        }
+
+            #registerForm h4 {
+                color: #003366; /* Deep Blue */
+                text-align: center; /* Center the title */
+                margin-bottom: 20px; /* Space below the title */
+            }
+
+        .btn-outline-dark {
+            border-color: #003366;
+            color: #003366;
+            padding: 8px 16px; /* Reduced padding for a smaller button */
+            font-size: 14px; /* Reduced font size */
+            border-radius: 4px; /* Slightly rounded corners */
+            font-weight: bold; /* Make text bold */
+        }
+
+            .btn-outline-dark:hover {
+                background-color: #003366;
+                color: #ffffff;
+            }
+
+        .form-control {
+            width: 100%; /* Make form controls take full width */
+            margin-bottom: 15px;
+        }
+
+        .text-danger {
+            color: #dc3545; /* Bootstrap's red for error messages */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Add space between form groups */
+        }
+
+        p {
+            text-align: center; /* Center the text */
+            margin-top: 20px; /* Space above the text */
+        }
+    </style>
+}
+
+<main aria-labelledby="title">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <section id="registerForm">
+            <h4>Create a new account.</h4>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-outline-dark" />
+            </div>
+        </section>
+    }
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

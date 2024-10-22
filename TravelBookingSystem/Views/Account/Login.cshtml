@@ -1,0 +1,119 @@
+﻿@using TravelBookingSystem.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+@section Styles {
+    <style>
+        #loginForm {
+            background-color: #ffffff; /* White background for the form */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px; /* Limit the width of the form */
+            margin: 0 auto; /* Center the form horizontally */
+        }
+
+            #loginForm h4 {
+                color: #003366; /* Deep Blue */
+                text-align: center; /* Center the title */
+                margin-bottom: 20px; /* Space below the title */
+            }
+
+        .btn-outline-dark {
+            border-color: #003366;
+            color: #003366;
+            padding: 8px 16px; /* Reduced padding for a smaller button */
+            font-size: 14px; /* Reduced font size */
+            border-radius: 4px; /* Slightly rounded corners */
+            font-weight: bold; /* Make text bold */
+        }
+
+            .btn-outline-dark:hover {
+                background-color: #003366;
+                color: #ffffff;
+            }
+
+        .form-control {
+            width: 100%; /* Make form controls take full width */
+            margin-bottom: 15px;
+        }
+
+        .text-danger {
+            color: #dc3545; /* Bootstrap's red for error messages */
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-check-label {
+            margin-left: 5px; /* Space between checkbox and label */
+        }
+
+        .form-group {
+            margin-bottom: 20px; /* Add space between form groups */
+        }
+
+        .row {
+            margin-bottom: 15px; /* Space between rows */
+        }
+
+        .form-group.mt-3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .form-group.mt-3 .btn {
+                margin-left: 10px; /* Add space between checkbox and button */
+            }
+
+        p {
+            text-align: center; /* Center the registration link */
+            margin-top: 20px; /* Space above the registration link */
+        }
+    </style>
+}
+
+<main aria-labelledby="title">
+    <section id="loginForm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Log in.</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group mt-3">
+                <div class="form-check">
+                    @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input" })
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "form-check-label" })
+                </div>
+                <input type="submit" value="Log in" class="btn btn-outline-dark" />
+            </div>
+
+            <p>
+                @Html.ActionLink("Register as a new user", "Register")
+            </p>
+        }
+    </section>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

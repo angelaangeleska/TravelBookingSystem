@@ -1,0 +1,61 @@
+﻿@model TravelBookingSystem.Models.Package
+
+@{
+    ViewBag.Title = "Package Details";
+}
+
+<div class="container">
+    <h2 class="text-center">@Model.Destination.Name - @Model.Accommodation.Name</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            @if (Model.Accommodation != null && !string.IsNullOrEmpty(Model.Accommodation.AccommodationImageURL))
+            {
+                <div class="thumbnail">
+                    <img src="@Model.Accommodation.AccommodationImageURL" alt="@Model.Accommodation.Name" class="img-responsive img-thumbnail" />
+                </div>
+            }
+        </div>
+
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p><strong>Destination:</strong> @Model.Destination.Description</p>
+                    <p><strong>Accommodation:</strong> @Model.Accommodation.Description</p>
+
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>Price</th>
+                                <td>@Model.Price.ToString("C")</td>
+                            </tr>
+                            <tr>
+                                <th>Departure Date</th>
+                                <td>@Model.StartDate.ToString("d MMM yyyy")</td>
+                            </tr>
+                            <tr>
+                                <th>Return Date</th>
+                                <td>@Model.EndDate.ToString("d MMM yyyy")</td>
+                            </tr>
+                            <tr>
+                                <th>Available Places</th>
+                                <td>@Model.AvailablePlaces</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="@Url.Action("Create", "Reservations", new { packageId = Model.Id })" class="btn btn-primary">Make Reservation</a>
+        <a href="@Url.Action("Index", "Packages")" class="btn btn-secondary">Show All Packages</a>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <a href="@Url.Action("Edit", "Packages", new { id = Model.Id })" class="btn btn-warning">Edit</a>
+        }
+    </div>
+</div>

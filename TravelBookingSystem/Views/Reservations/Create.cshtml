@@ -1,0 +1,122 @@
+﻿@model TravelBookingSystem.Models.Reservation
+
+@{
+    ViewBag.Title = "Create Reservation";
+    var packagePrice = ViewBag.PackagePrice;
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<div class="card">
+    <div class="card-header">
+        <h2>Create Reservation</h2>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "Reservations", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var state in ViewData.ModelState)
+                        {
+                            foreach (var error in state.Value.Errors)
+                            {
+                                <li>@error.ErrorMessage</li>
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FullName, new { @class = "control-label" })
+                        <i class="fas fa-user"></i>
+                        @Html.TextBoxFor(model => model.FullName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.UserEmail, new { @class = "control-label" })
+                        <i class="fas fa-envelope"></i>
+                        @Html.TextBoxFor(model => model.UserEmail, new { @class = "form-control", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NumberOfAdults, new { @class = "control-label" })
+                        @Html.TextBoxFor(model => model.NumberOfAdults, new { @class = "form-control", id = "numberOfAdults" })
+                        @Html.ValidationMessageFor(model => model.NumberOfAdults, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NumberOfChildren, new { @class = "control-label", @data_toggle = "tooltip", title = "Please count children aged 4-12." })
+                        @Html.TextBoxFor(model => model.NumberOfChildren, new { @class = "form-control", id = "numberOfChildren" })
+                        @Html.ValidationMessageFor(model => model.NumberOfChildren, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 20px; margin-bottom: 20px;">
+                <div class="alert alert-info" role="alert">
+                    <strong>Children’s Policy:</strong>
+                    <ul>
+                        <li>
+                            <strong>Ages 0-3:</strong> Stay for free and will sleep in their parents' beds. They are not included in the guest count.
+                        </li>
+                        <li>
+                            <strong>Ages 4-12:</strong> The rate is 50% of the regular price. Please include them in your total guest count.
+                        </li>
+                    </ul>
+                    Thank you for choosing us for your travel arrangements!
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Total Cost:</label>
+                <div id="totalCostDisplay" style="font-size: 1.5em; font-weight: bold;">$0.00</div>
+                <input type="hidden" id="totalCost" name="TotalCost" value="0" />
+            </div>
+
+            <input type="hidden" name="PackageId" value="@Model.PackageId" />
+            <input type="hidden" name="CreatedDate" value="@DateTime.Now" />
+
+            <div class="form-group text-center">
+                <input type="submit" value="Create Reservation" class="btn btn-primary" style="width: auto; padding: 10px 20px;" />
+            </div>
+
+        }
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var packagePrice = @packagePrice;
+
+        function updateTotalCost() {
+            var numberOfAdults = parseInt($('#numberOfAdults').val()) || 0;
+            var numberOfChildren = parseInt($('#numberOfChildren').val()) || 0;
+
+            var totalCost = (numberOfAdults * packagePrice) + (numberOfChildren * packagePrice * 0.5);
+            $('#totalCost').val(totalCost.toFixed(2));
+            $('#totalCostDisplay').text('$' + totalCost.toFixed(2));
+        }
+
+        $('#numberOfAdults, #numberOfChildren').on('input', updateTotalCost);
+
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

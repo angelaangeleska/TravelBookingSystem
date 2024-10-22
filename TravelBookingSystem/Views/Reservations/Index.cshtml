@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TravelBookingSystem.Models.Reservation>
+@using TravelBookingSystem.Models
+
+@{
+    ViewBag.Title = "Reservations";
+}
+
+<div class="container">
+    <table class="table table-striped" id="reservationsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Package</th>
+                <th>Date of creation</th>
+                <th>User Email</th>
+                <th>Number of People</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Model)
+            {
+                <tr>
+                    <td>@reservation.Id</td>
+                    <td>@reservation.Package.Destination.Name - @reservation.Package.Accommodation.Name</td>
+                    <td>@reservation.CreatedDate.ToString("MM/dd/yyyy HH:mm")</td>
+                    <td>@reservation.UserEmail</td>
+                    <td>@reservation.TotalPeople</td>
+                    <td>@reservation.Status</td>
+                    <td>
+                        @if (reservation.Status == ReservationStatus.Pending)
+                        {
+                            <a href="@Url.Action("UpdateStatus", new { id = reservation.Id })" class="btn btn-primary btn-sm">Update Status</a>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary btn-sm" disabled>Update Status</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#reservationsTable").DataTable();
+        });
+    </script>
+}

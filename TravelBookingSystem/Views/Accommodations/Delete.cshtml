@@ -1,0 +1,95 @@
+﻿@model TravelBookingSystem.Models.Accommodation
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="container">
+    <div class="card shadow-sm p-4">
+        <h3>Confirm Deletion</h3>
+        <hr />
+        <div class="destination-info text-center">
+            <p><strong>@Html.DisplayFor(model => model.Name)</strong></p>
+            <p>@Html.DisplayFor(model => model.Description)</p>
+            <div class="image-container text-center">
+                <img src="@Model.AccommodationImageURL" alt="@Model.Name" class="img-fluid rounded" style="max-width: 300px; height: auto; border: 5px solid #dc3545; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" />
+            </div>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-actions text-center mt-3">
+                <input type="submit" value="&#x1F5D1; Delete" class="btn btn-danger" />
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f7f9fc; 
+    }
+
+    .card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+        font-family: 'Montserrat', sans-serif;
+        color: #dc3545; 
+    }
+
+    .destination-info {
+        text-align: center; 
+    }
+
+    strong {
+        font-size: 2.2em; 
+        font-weight: bold; 
+        color: #2c3e50; 
+        position: relative;
+    }
+
+        strong:after {
+            content: "";
+            display: block;
+            width: 50%;
+            height: 4px;
+            background-color: #dc3545; 
+            margin: 10px auto 0; 
+        }
+
+    .destination-info p {
+        font-size: 1.1em; 
+        font-style: italic; 
+    }
+
+    .image-container {
+        margin-top: 15px;
+    }
+
+    .form-actions {
+        margin-top: 20px;
+    }
+
+    .btn {
+        transition: transform 0.2s ease;
+    }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+    .btn-danger {
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+</style>

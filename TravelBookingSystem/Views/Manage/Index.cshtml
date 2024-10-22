@@ -1,0 +1,73 @@
+﻿@model TravelBookingSystem.Models.IndexViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<main class="container mt-4" aria-labelledby="title">
+    <h2 id="title" class="text-center mb-4">@ViewBag.Title</h2>
+
+    <p class="text-success text-center">@ViewBag.StatusMessage</p>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Change your account settings</h4>
+            <hr />
+
+            <dl class="row">
+                <dt class="col-sm-3 font-weight-bold">Email:</dt>
+                <dd class="col-sm-9">
+                    <p class="form-control-plaintext">@ViewBag.Email</p>
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold">Password:</dt>
+                <dd class="col-sm-9">
+                    @if (Model.HasPassword)
+                    {
+                        @Html.ActionLink("Change your password", "ChangePassword", new { @class = "btn btn-info" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Create", "SetPassword", new { @class = "btn btn-primary" })
+                    }
+                </dd>
+            </dl>
+        </div>
+    </div>
+</main>
+
+<style>
+    .card {
+        margin-top: 1rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    .btn-info, .btn-primary {
+        margin-right: 0.5rem;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .form-control-plaintext {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-size: 1rem;
+    }
+</style>

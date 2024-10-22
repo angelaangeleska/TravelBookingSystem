@@ -1,0 +1,36 @@
+﻿@model IEnumerable<TravelBookingSystem.Models.Reservation>
+
+@{
+    ViewBag.Title = "My Reservations";
+}
+
+<h2>My Reservations</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Package</th>
+            <th>Number of People</th>
+            <th>Total Cost</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model)
+        {
+            <tr>
+                <td>@reservation.Package.Destination.Name - @reservation.Package.Accommodation.Name</td>
+                <td>@reservation.TotalPeople</td>
+                <td>@reservation.TotalCost.ToString("C")</td>
+                <td>@reservation.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section scripts {
+    <script>$(document).ready(function () {
+            $("#destinationsTable").DataTable();
+        });</script>
+}
